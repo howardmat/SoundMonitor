@@ -2,7 +2,7 @@
 
 // Declare global variables
 bool _isCurrentlyRecording = false;
-float _fractionThresholdBeforeRecord = 0.08F;
+float _fractionThresholdBeforeRecord = 0.1F;
 WaveFileWriter? _writer = null;
 DateTime? _initiateRecordingTime = null;
 DateTime? _recordingTimeoutStartTime = null;
@@ -10,9 +10,9 @@ double _recordingTimeoutSeconds = 30;
 string _baseOutputFolder = $"E:\\SoundMonitor_Output";
 
 #if DEBUG
-_recordingTimeoutSeconds = 5;
+_recordingTimeoutSeconds = 30;
 _fractionThresholdBeforeRecord = 0.1F;
-_baseOutputFolder = $"E:\\SoundMonitor_Output\\_test";
+_baseOutputFolder = $"E:\\SoundMonitor_Output";
 #endif
 
 // Start the program
@@ -120,7 +120,7 @@ void LogRecording()
         {
             $"Start    : {_initiateRecordingTime.Value:yyyyMMdd HH:mm:ss}",
             $"End      : {now:yyyyMMdd HH:mm:ss}",
-            $"Duration : {(int)difference.TotalMinutes} minutes, {(int)difference.TotalSeconds} seconds"
+            $"Duration : {(int)difference.TotalMinutes} minutes, {(int)difference.TotalSeconds % 60} seconds"
         };
 
         if (File.Exists(outputFilePath))
@@ -145,6 +145,11 @@ string GetOutputRecordingFolder()
 
 void PrintMeterBar(float fraction)
 {
+    if (fraction < 0)
+        fraction = 0;
+    if (fraction > 1)
+        fraction = 1;
+
     string bar = new('#', (int)(fraction * 60));
     string meter = "[" + bar.PadRight(50, '-') + "]";
 
