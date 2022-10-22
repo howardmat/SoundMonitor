@@ -1,13 +1,8 @@
 ﻿string _baseDirectory = "E:\\SoundMonitor_Output";
-string[] _ommitFolders = new string[] { "_test", "_report" };
+string[] _ommitFolders = new string[] { "_test" };
 
-string _reportPath = Path.Combine(_baseDirectory, "_report");
-string _outputFilePath = Path.Combine(_reportPath, "log.txt");
+string _outputFilePath = Path.Combine(_baseDirectory, "report.txt");
 
-if (!Directory.Exists(_reportPath))
-{
-    Directory.CreateDirectory(_reportPath);
-}
 if (File.Exists(_outputFilePath))
 {
     File.Delete(_outputFilePath);
@@ -36,7 +31,7 @@ foreach (var directory in directories)
                 }
 
                 var logFileContents = File.ReadAllLines(currentFile).ToList();
-                logFileContents.Add($"Audio    : {audioFileName}");
+                logFileContents.Add($"Audio    : {folderName}\\{Path.GetFileName(audioFileName)}");
                 logFileContents.Add("");
 
                 File.AppendAllLines(_outputFilePath, logFileContents);

@@ -10,7 +10,7 @@ double _recordingTimeoutSeconds = 30;
 string _baseOutputFolder = $"E:\\SoundMonitor_Output";
 
 #if DEBUG
-_recordingTimeoutSeconds = 30;
+_recordingTimeoutSeconds = 90;
 _fractionThresholdBeforeRecord = 0.1F;
 _baseOutputFolder = $"E:\\SoundMonitor_Output";
 #endif
